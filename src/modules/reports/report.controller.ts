@@ -9,6 +9,17 @@ import {
   updateReportStatus,
 } from './report.service.js';
 
+function getCaseCodeParam(req: Request, res: Response): string | null {
+  const caseCode = req.params['caseCode'];
+
+  if (typeof caseCode !== 'string' || caseCode.trim().length === 0) {
+    errorResponse(res, 400, 'Case code is required');
+    return null;
+  }
+
+  return caseCode;
+}
+
 export async function createReportController(req: Request, res: Response) {
   const report = await createReport(req.body);
 
@@ -31,7 +42,8 @@ export async function listReportsController(req: Request, res: Response) {
 }
 
 export async function getReportController(req: Request, res: Response) {
-  const { caseCode } = req.params;
+  const caseCode = getCaseCodeParam(req, res);
+  if (!caseCode) return;
 
   const report = await getReportByCaseCode(caseCode);
 
@@ -45,7 +57,8 @@ export async function getReportController(req: Request, res: Response) {
 }
 
 export async function addMessageController(req: Request, res: Response) {
-  const { caseCode } = req.params;
+  const caseCode = getCaseCodeParam(req, res);
+  if (!caseCode) return;
 
   const message = await addReportMessage(caseCode, req.body);
 
@@ -55,7 +68,8 @@ export async function addMessageController(req: Request, res: Response) {
 }
 
 export async function getMessagesController(req: Request, res: Response) {
-  const { caseCode } = req.params;
+  const caseCode = getCaseCodeParam(req, res);
+  if (!caseCode) return;
 
   const report = await getReportByCaseCode(caseCode);
 
@@ -69,7 +83,8 @@ export async function getMessagesController(req: Request, res: Response) {
 }
 
 export async function updateStatusController(req: Request, res: Response) {
-  const { caseCode } = req.params;
+  const caseCode = getCaseCodeParam(req, res);
+  if (!caseCode) return;
 
   const report = await updateReportStatus(caseCode, req.body.status);
 
@@ -79,7 +94,8 @@ export async function updateStatusController(req: Request, res: Response) {
 }
 
 export async function updatePriorityController(req: Request, res: Response) {
-  const { caseCode } = req.params;
+  const caseCode = getCaseCodeParam(req, res);
+  if (!caseCode) return;
 
   const report = await updateReportPriority(caseCode, req.body.priority);
 

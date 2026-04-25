@@ -1,0 +1,1 @@
+{"version":3,"file":"generateCaseCode.js","sourceRoot":"","sources":["../../src/utils/generateCaseCode.ts"],"names":[],"mappings":"AAAA,MAAM,UAAU,gBAAgB;IAC9B,MAAM,YAAY,GAAG,IAAI,CAAC,KAAK,CAAC,MAAM,GAAG,IAAI,CAAC,MAAM,EAAE,GAAG,MAAM,CAAC,CAAC;IACjE,OAAO,OAAO,YAAY,EAAE,CAAC;AAC/B,CAAC"}
