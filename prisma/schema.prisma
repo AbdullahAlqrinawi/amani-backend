@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum ReportStatus {
+  NEW
+  OPEN
+  IN_REVIEW
+  RESOLVED
+  ESCALATED
+}
+
+enum ReportPriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum SenderType {
+  CHILD
+  ADMIN
+  SYSTEM
+}
+
+model Report {
+  id              String         @id @default(cuid())
+  caseCode        String         @unique
+  anonymousUserId String
+  category        String
+  ageGroup        String?
+  language        String         @default("ar")
+  status          ReportStatus   @default(NEW)
+  priority        ReportPriority @default(MEDIUM)
+  assignedTo      String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  messages        ReportMessage[]
+
+  @@index([caseCode])
+  @@index([status])
+  @@index([priority])
+  @@index([createdAt])
+}
+
+model ReportMessage {
+  id        String     @id @default(cuid())
+  reportId  String
+  sender    SenderType
+  message   String
+  createdAt DateTime   @default(now())
+
+  report    Report     @relation(fields: [reportId], references: [id], onDelete: Cascade)
+
+  @@index([reportId])
+  @@index([createdAt])
+}
