@@ -6,11 +6,15 @@ export const swaggerDocument = {
     description: 'Backend API for Amani child safety reporting system',
   },
   servers: [
-    {
-      url: 'http://localhost:4000/api',
-      description: 'Local development server',
-    },
-  ],
+  {
+    url: 'https://amani-backend-hsx5.onrender.com/api',
+    description: 'Production server',
+  },
+  {
+    url: 'http://localhost:4000/api',
+    description: 'Local development server',
+  },
+],
   tags: [
     {
       name: 'Health',
